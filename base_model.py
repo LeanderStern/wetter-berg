@@ -1,15 +1,21 @@
+from functools import cached_property
 from logging import Logger
 import logging
-from typing import Any, ClassVar
+from typing import ClassVar
 from pydantic import BaseModel
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler()
+    ]
+)
 
 class WBBaseModel(BaseModel):
-    LOGGER: ClassVar[Logger] = logging.getLogger(__name__)
+    
+    _LOGGER: ClassVar[Logger | None] = None
 
-    def model_post_init(self, __context: Any) -> None:
-        logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[logging.StreamHandler()]
-)
+    @cached_property
+    def logger(self) -> Logger:
+        return logging.getLogger(f"{self.__class__.__module__}.{self.__class__.__name__}")

@@ -1,0 +1,9 @@
+services:
+  discord-bot:
+    build: .
+    secrets:
+      - discord_token
+
+secrets:
+  discord_token:
+    file: ./secrets/discord_token.txt

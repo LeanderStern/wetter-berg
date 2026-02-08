@@ -1,0 +1,33 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Secrets
+secrets/
+
+# Type checking and linting cache
+.mypy_cache/
+
+# Documentation
+README.md
+
+# Docker Compose and Dockerfile
+docker-compose.yaml
+Dockerfile
+
+# SQLite cache
+*.sqlite

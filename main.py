@@ -1,13 +1,21 @@
+import locale
 import logging
-from api_service.api_service import ApiService
-from base_model import WBBaseModel
+import os
+
+import discord
+from dotenv import load_dotenv
+
+load_dotenv(interpolate=True)
+locale.setlocale(locale.LC_TIME, os.getenv("LOCAL"))
+
+from discord_client.discord_client import DiscordClient
 
 def main():
-    api_service = ApiService()
-    response = api_service.get_snow_forecast()
-    print(response.json())
-
+    intents = discord.Intents.default()
+    intents.message_content = True
+    discord_client = DiscordClient(intents=intents)
+    discord_client.run(os.getenv("BOT_TOKEN"))
 
 if __name__ == "__main__":
-    WBBaseModel.LOGGER.setLevel(logging.DEBUG)
+    logging.getLogger().setLevel(logging.DEBUG)
     main()

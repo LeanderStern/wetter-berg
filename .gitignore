@@ -5,9 +5,11 @@ build/
 dist/
 wheels/
 *.egg-info
+*.sqlite
+.idea
 
 # Virtual environments
 .venv
 
-# Environment variables
-.env
+# Secrets
+secrets/*.txt
