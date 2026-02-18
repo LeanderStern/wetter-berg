@@ -39,10 +39,11 @@ class HourlySnowForecastResponse(WBBaseModel):
             time_ranges.append(SnowfallTimeRange(start=start_time, end=end_time, snowfall_sum_cm=snowfall_sum))
         return time_ranges
 
-    @cached_property
-    def current_snow_depth(self) -> float:
-        current_hour = datetime.now().hour
+    @validate_call
+    def get_snow_depth_diff(self, target_date: datetime) -> tuple[float, float]:
+        """Returns snowfall time intervals. Only compares day and month."""
+        depth_range = []
         for i, date in enumerate(self.time):
-            if date.hour == current_hour:
-                return self.snow_depth[i]
-        raise ValueError("Hourly snow depth not found for current hour.")
+            if date.day == target_date.day and date.month == target_date.month:
+                depth_range.append(self.snow_depth[i])
+        return depth_range[0], depth_range[-1]

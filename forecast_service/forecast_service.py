@@ -1,9 +1,6 @@
 import os
 from datetime import datetime, timedelta
-from functools import cached_property
 from typing import Any, ClassVar
-
-import requests
 import requests_cache
 import retry_requests
 from pydantic import PrivateAttr

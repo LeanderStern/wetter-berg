@@ -33,8 +33,8 @@ class DiscordClient(discord.Client):
         for i, daily_snowfall_sum in enumerate(daily_forecast.snowfall_sum):
             if daily_snowfall_sum > 0:
                 loop_date = daily_forecast.time[i]
-                snowfall_time_periods = hourly_forecast.get_snowfall_intervals(loop_date)
 
+                snowfall_time_periods = hourly_forecast.get_snowfall_intervals(loop_date)
                 snowfall_time_periods_string = ""
                 if len(snowfall_time_periods) > 1:
                     for j, period in enumerate(snowfall_time_periods):
@@ -42,8 +42,10 @@ class DiscordClient(discord.Client):
                 else:
                     snowfall_time_periods_string = snowfall_time_periods[0].time_range_str
 
+                snow_depth_start, snow_depth_end = hourly_forecast.get_snow_depth_diff(loop_date)
+
                 message += (f"## {"☃️" if daily_snowfall_sum > 3 else "⛄"} {loop_date.strftime("%A, %d.%m")}\n" +
-                            f"> - **❄️ Aktuelle Schneehöhe:** {hourly_forecast.current_snow_depth}cm\n" +
+                            f"> - **❄️ Schneehöhendifferenz:** {snow_depth_start}cm - {snow_depth_end}cm\n" +
                             f"> - **🌨️ Neuschnee:** {daily_snowfall_sum}cm\n" +
                             f"> - **🔮 Wahrscheinlichkeit:** {daily_forecast.precipitation_probability_max[i]}%\n" +
                             f"> - **🕑 Zeitraum:** " + snowfall_time_periods_string + "\n")
