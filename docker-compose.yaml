@@ -3,6 +3,7 @@ services:
     build: .
     secrets:
       - discord_token
+    restart: unless-stopped
 
 secrets:
   discord_token:
